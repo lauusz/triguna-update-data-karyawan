@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env
+.env.local
+api_key.json
+kunci_google.json
+!.env.example
+.superpowers/

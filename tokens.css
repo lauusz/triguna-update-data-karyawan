@@ -1,0 +1,40 @@
+/* Hallmark · macrostructure: Long Document · tone: Almanac · anchor hue: ink-blue */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 */
+:root {
+  --color-paper: oklch(97% 0.008 85);
+  --color-surface: oklch(100% 0.005 85);
+  --color-ink: oklch(23% 0.02 250);
+  --color-muted: oklch(47% 0.018 250);
+  --color-rule: oklch(84% 0.016 250);
+  --color-accent: oklch(39% 0.1 250);
+  --color-accent-ink: oklch(100% 0.005 85);
+  --color-accent-strong: oklch(31% 0.1 250);
+  --color-accent-soft: oklch(92% 0.026 250);
+  --color-danger: oklch(48% 0.16 30);
+  --color-success: oklch(40% 0.1 150);
+  --color-focus: oklch(49% 0.15 250);
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-display: clamp(2.35rem, 5vw, 4.25rem);
+  --dur-short: 180ms;
+  --dur-press: 100ms;
+  --dur-medium: 280ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --rule-thin: 1px;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --shadow-card: 0 1.25rem 3.5rem oklch(20% 0.025 250 / 12%);
+}
