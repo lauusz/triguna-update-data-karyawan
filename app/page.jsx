@@ -5,9 +5,16 @@ import { useEffect, useRef, useState } from 'react';
 const emptyForm = {
   fullName: '',
   domicile: '',
-  contactName: '',
-  relationship: '',
-  phone: ''
+  rtRw: '',
+  village: '',
+  district: '',
+  regency: '',
+  contactOneName: '',
+  contactOneRelationship: '',
+  contactOnePhone: '',
+  contactTwoName: '',
+  contactTwoRelationship: '',
+  contactTwoPhone: ''
 };
 
 export default function Home() {
@@ -92,7 +99,7 @@ export default function Home() {
 
   function updateField(event) {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: name === 'phone' ? value : value.toUpperCase() }));
+    setForm((current) => ({ ...current, [name]: name.endsWith('Phone') ? value : value.toUpperCase() }));
     setErrors((current) => ({ ...current, [name]: undefined }));
   }
 
@@ -113,13 +120,15 @@ export default function Home() {
           <p className="intro">Gunakan PIN yang diberikan untuk membuka formulir pembaruan data.</p>
 
           <form onSubmit={verifyPin} noValidate>
-            <label htmlFor="pin">PIN akses</label>
+            <label htmlFor="pin"></label>
             <input
               id="pin"
               name="pin"
+              className="pin-input"
               type="password"
               inputMode="numeric"
               pattern="[0-9]*"
+              maxLength={4}
               autoComplete="one-time-code"
               value={pin}
               onChange={(event) => setPin(event.target.value.replace(/\D/g, ''))}
@@ -144,7 +153,7 @@ export default function Home() {
         <header className="form-header">
           <p className="eyebrow">UPDATE DATA</p>
           <h1 id="form-title">Pastikan data kontak Anda terbaru.</h1>
-          <p className="intro">Lengkapi seluruh informasi di bawah. Setiap pengiriman akan dicatat sebagai pembaruan baru.</p>
+          <p className="intro">Lengkapi seluruh informasi di bawah. Setiap pengiriman akan dicatat sebagai pembaruan Data.</p>
         </header>
 
         <form onSubmit={submitForm} noValidate>
@@ -154,31 +163,80 @@ export default function Home() {
               <input id="fullName" name="fullName" value={form.fullName} onChange={updateField} aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? 'fullName-error' : undefined} autoComplete="name" required />
               <p className="field-error" id="fullName-error">{errors.fullName || '\u00A0'}</p>
             </div>
-            <div className="field field-wide">
-              <label htmlFor="domicile">Domisili Saat ini</label>
-              <input id="domicile" name="domicile" value={form.domicile} onChange={updateField} aria-invalid={Boolean(errors.domicile)} aria-describedby={errors.domicile ? 'domicile-error' : undefined} autoComplete="address-level2" required />
-              <p className="field-error" id="domicile-error">{errors.domicile || '\u00A0'}</p>
-            </div>
           </div>
+
+          <fieldset className="domicile-section">
+            <legend>Domisili Saat Ini</legend>
+            <div className="family-grid">
+              <div className="field field-wide">
+                <label htmlFor="domicile">Alamat Tempat Tinggal</label>
+                <input id="domicile" name="domicile" value={form.domicile} onChange={updateField} aria-invalid={Boolean(errors.domicile)} aria-describedby={errors.domicile ? 'domicile-error' : undefined} autoComplete="street-address" required />
+                <p className="field-error" id="domicile-error">{errors.domicile || '\u00A0'}</p>
+              </div>
+              <div className="field">
+                <label htmlFor="rtRw">RT/RW</label>
+                <input id="rtRw" name="rtRw" value={form.rtRw} onChange={updateField} aria-invalid={Boolean(errors.rtRw)} aria-describedby={errors.rtRw ? 'rtRw-error' : undefined} required />
+                <p className="field-error" id="rtRw-error">{errors.rtRw || '\u00A0'}</p>
+              </div>
+              <div className="field">
+                <label htmlFor="village">Kelurahan/Desa</label>
+                <input id="village" name="village" value={form.village} onChange={updateField} aria-invalid={Boolean(errors.village)} aria-describedby={errors.village ? 'village-error' : undefined} required />
+                <p className="field-error" id="village-error">{errors.village || '\u00A0'}</p>
+              </div>
+              <div className="field">
+                <label htmlFor="district">Kecamatan</label>
+                <input id="district" name="district" value={form.district} onChange={updateField} aria-invalid={Boolean(errors.district)} aria-describedby={errors.district ? 'district-error' : undefined} required />
+                <p className="field-error" id="district-error">{errors.district || '\u00A0'}</p>
+              </div>
+              <div className="field">
+                <label htmlFor="regency">Kabupaten/Kota</label>
+                <input id="regency" name="regency" value={form.regency} onChange={updateField} aria-invalid={Boolean(errors.regency)} aria-describedby={errors.regency ? 'regency-error' : undefined} required />
+                <p className="field-error" id="regency-error">{errors.regency || '\u00A0'}</p>
+              </div>
+            </div>
+          </fieldset>
 
           <fieldset className="family-section">
             <legend>Keluarga yang dapat dihubungi</legend>
-            <p className="section-note">Diisi untuk kebutuhan komunikasi jika diperlukan.</p>
-            <div className="family-grid">
-              <div className="field field-wide">
-                <label htmlFor="contactName">Nama keluarga yang dapat dihubungi</label>
-                <input id="contactName" name="contactName" value={form.contactName} onChange={updateField} aria-invalid={Boolean(errors.contactName)} aria-describedby={errors.contactName ? 'contactName-error' : undefined} required />
-                <p className="field-error" id="contactName-error">{errors.contactName || '\u00A0'}</p>
+            <p className="section-note required-note">Wajib diisi untuk kebutuhan komunikasi jika diperlukan.</p>
+            <div className="contact-group">
+              <p className="contact-title">Kontak 1</p>
+              <div className="family-grid">
+                <div className="field field-wide">
+                  <label htmlFor="contactOneName">Nama keluarga yang dapat dihubungi</label>
+                  <input id="contactOneName" name="contactOneName" value={form.contactOneName} onChange={updateField} aria-invalid={Boolean(errors.contactOneName)} aria-describedby={errors.contactOneName ? 'contactOneName-error' : undefined} required />
+                  <p className="field-error" id="contactOneName-error">{errors.contactOneName || '\u00A0'}</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="contactOneRelationship">Hubungan</label>
+                  <input id="contactOneRelationship" name="contactOneRelationship" value={form.contactOneRelationship} onChange={updateField} aria-invalid={Boolean(errors.contactOneRelationship)} aria-describedby={errors.contactOneRelationship ? 'contactOneRelationship-error' : undefined} required />
+                  <p className="field-error" id="contactOneRelationship-error">{errors.contactOneRelationship || '\u00A0'}</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="contactOnePhone">Nomor yang dapat dihubungi</label>
+                  <input id="contactOnePhone" name="contactOnePhone" type="tel" inputMode="tel" value={form.contactOnePhone} onChange={updateField} aria-invalid={Boolean(errors.contactOnePhone)} aria-describedby={errors.contactOnePhone ? 'contactOnePhone-error' : undefined} autoComplete="tel" required />
+                  <p className="field-error" id="contactOnePhone-error">{errors.contactOnePhone || '\u00A0'}</p>
+                </div>
               </div>
-              <div className="field">
-                <label htmlFor="relationship">Hubungan</label>
-                <input id="relationship" name="relationship" value={form.relationship} onChange={updateField} aria-invalid={Boolean(errors.relationship)} aria-describedby={errors.relationship ? 'relationship-error' : undefined} required />
-                <p className="field-error" id="relationship-error">{errors.relationship || '\u00A0'}</p>
-              </div>
-              <div className="field">
-                <label htmlFor="phone">Nomor yang dapat dihubungi</label>
-                <input id="phone" name="phone" type="tel" inputMode="tel" value={form.phone} onChange={updateField} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? 'phone-error' : undefined} autoComplete="tel" required />
-                <p className="field-error" id="phone-error">{errors.phone || '\u00A0'}</p>
+            </div>
+            <div className="contact-group">
+              <p className="contact-title">Kontak 2</p>
+              <div className="family-grid">
+                <div className="field field-wide">
+                  <label htmlFor="contactTwoName">Nama keluarga yang dapat dihubungi</label>
+                  <input id="contactTwoName" name="contactTwoName" value={form.contactTwoName} onChange={updateField} aria-invalid={Boolean(errors.contactTwoName)} aria-describedby={errors.contactTwoName ? 'contactTwoName-error' : undefined} required />
+                  <p className="field-error" id="contactTwoName-error">{errors.contactTwoName || '\u00A0'}</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="contactTwoRelationship">Hubungan</label>
+                  <input id="contactTwoRelationship" name="contactTwoRelationship" value={form.contactTwoRelationship} onChange={updateField} aria-invalid={Boolean(errors.contactTwoRelationship)} aria-describedby={errors.contactTwoRelationship ? 'contactTwoRelationship-error' : undefined} required />
+                  <p className="field-error" id="contactTwoRelationship-error">{errors.contactTwoRelationship || '\u00A0'}</p>
+                </div>
+                <div className="field">
+                  <label htmlFor="contactTwoPhone">Nomor yang dapat dihubungi</label>
+                  <input id="contactTwoPhone" name="contactTwoPhone" type="tel" inputMode="tel" value={form.contactTwoPhone} onChange={updateField} aria-invalid={Boolean(errors.contactTwoPhone)} aria-describedby={errors.contactTwoPhone ? 'contactTwoPhone-error' : undefined} autoComplete="tel" required />
+                  <p className="field-error" id="contactTwoPhone-error">{errors.contactTwoPhone || '\u00A0'}</p>
+                </div>
               </div>
             </div>
           </fieldset>

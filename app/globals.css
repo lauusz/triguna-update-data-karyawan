@@ -37,7 +37,7 @@ button { cursor: pointer; }
 }
 
 .form-frame { padding: var(--space-xl) var(--space-lg); }
-.pin-card { padding: var(--space-xl); }
+.pin-card { inline-size: min(100%, 34rem); padding: var(--space-xl); }
 
 .form-header { margin-block-end: var(--space-xl); }
 
@@ -78,6 +78,9 @@ h2 {
 
 .intro { margin: var(--space-lg) 0 0; }
 .section-note { margin: var(--space-xs) 0 var(--space-lg); font-size: var(--text-sm); }
+.required-note { color: var(--color-danger); font-size: var(--text-base); font-weight: 700; }
+.contact-title { margin: 0 0 var(--space-md); font-size: var(--text-sm); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.contact-group + .contact-group { margin-block-start: var(--space-xl); padding-block-start: var(--space-xl); border-top: var(--rule-thin) solid var(--color-rule); }
 
 .form-grid, .family-grid { display: grid; gap: var(--space-lg); }
 
@@ -112,7 +115,22 @@ input[aria-invalid='true'] { border-color: var(--color-danger); background: var(
 input:active { border-color: var(--color-accent); }
 input:disabled { cursor: not-allowed; opacity: 0.55; }
 
-.family-section {
+.pin-input {
+  display: block;
+  inline-size: 100%;
+  margin-inline: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-align: center;
+}
+
+.pin-card form {
+  max-inline-size: 20rem;
+  margin-inline: auto;
+}
+
+.family-section, .domicile-section {
   margin: var(--space-2xl) 0 0;
   padding: var(--space-lg) 0 0;
   border: 0;

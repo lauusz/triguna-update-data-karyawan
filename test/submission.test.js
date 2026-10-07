@@ -8,9 +8,16 @@ const validBody = {
   pin: '4491',
   fullName: '  Dini Kusuma  ',
   domicile: '  Jakarta Selatan ',
-  contactName: 'Tono Kusuma',
-  relationship: 'Ayah',
-  phone: '+62 812-3456-7890'
+  rtRw: '001/002',
+  village: 'Senayan',
+  district: 'Kebayoran Baru',
+  regency: 'Jakarta Selatan',
+  contactOneName: 'Tono Kusuma',
+  contactOneRelationship: 'Ayah',
+  contactOnePhone: '+62 812-3456-7890',
+  contactTwoName: 'Sari Kusuma',
+  contactTwoRelationship: 'Ibu',
+  contactTwoPhone: '+62 811-1111-2222'
 };
 
 test('accepts complete data and preserves a formatted phone number', () => {
@@ -19,9 +26,16 @@ test('accepts complete data and preserves a formatted phone number', () => {
   assert.deepEqual(result.data, {
     fullName: 'DINI KUSUMA',
     domicile: 'JAKARTA SELATAN',
-    contactName: 'TONO KUSUMA',
-    relationship: 'AYAH',
-    phone: '+62 812-3456-7890'
+    rtRw: '001/002',
+    village: 'SENAYAN',
+    district: 'KEBAYORAN BARU',
+    regency: 'JAKARTA SELATAN',
+    contactOneName: 'TONO KUSUMA',
+    contactOneRelationship: 'AYAH',
+    contactOnePhone: '+62 812-3456-7890',
+    contactTwoName: 'SARI KUSUMA',
+    contactTwoRelationship: 'IBU',
+    contactTwoPhone: '+62 811-1111-2222'
   });
 });
 
@@ -43,9 +57,16 @@ test('maps normalized data to the agreed spreadsheet column order', () => {
     '2026-10-07T09:00:00+07:00',
     'DINI KUSUMA',
     'JAKARTA SELATAN',
+    '001/002',
+    'SENAYAN',
+    'KEBAYORAN BARU',
+    'JAKARTA SELATAN',
     'TONO KUSUMA',
     'AYAH',
-    '+62 812-3456-7890'
+    '+62 812-3456-7890',
+    'SARI KUSUMA',
+    'IBU',
+    '+62 811-1111-2222'
   ]);
 });
 
@@ -94,14 +115,14 @@ test('appends the agreed spreadsheet row after server validation', async () => {
 
   assert.equal(response.status, 200);
   assert.deepEqual(row, [
-    '2026-10-07T09:00:00+07:00', 'DINI KUSUMA', 'JAKARTA SELATAN',
-    'TONO KUSUMA', 'AYAH', '+62 812-3456-7890'
+    '2026-10-07T09:00:00+07:00', 'DINI KUSUMA', 'JAKARTA SELATAN', '001/002', 'SENAYAN', 'KEBAYORAN BARU', 'JAKARTA SELATAN',
+    'TONO KUSUMA', 'AYAH', '+62 812-3456-7890', 'SARI KUSUMA', 'IBU', '+62 811-1111-2222'
   ]);
 });
 
-test('quotes spreadsheet tab names for a valid A1 range', () => {
-  assert.equal(sheetRange('Data Karyawan'), "'Data Karyawan'!A:F");
-  assert.equal(sheetRange("Data Karyawan '2026'"), "'Data Karyawan ''2026'''!A:F");
+test('quotes spreadsheet tab names for the expanded A1 range', () => {
+  assert.equal(sheetRange('Data Karyawan'), "'Data Karyawan'!A:M");
+  assert.equal(sheetRange("Data Karyawan '2026'"), "'Data Karyawan ''2026'''!A:M");
 });
 
 test('uses the local service-account JSON only when environment credentials are absent', () => {
